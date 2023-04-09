@@ -1,0 +1,9 @@
+.git
+*.md
+terraform
+k8s-resources
+faceit-instructions
+docker_bp_kubeconfig.sh
+k8s_deploy.sh
+k8s_delete.sh
+diagram.png

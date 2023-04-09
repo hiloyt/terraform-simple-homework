@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faceit
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: faceit
+  template:
+    metadata:
+      labels:
+        app: faceit
+    spec:
+      containers:
+      - name: faceit
+        image: CM_IMAGE_LOC:latest
+        env:
+        - name: POSTGRESQL_HOST 
+          value: CM_RDS_LOC
+        - name: POSTGRESQL_DBNAME
+          value: faceit
+        - name: POSTGRESQL_USER 
+          value: faceit
+        - name: POSTGRESQL_PASSWORD
+          value: xmowwux!!3QpMj
+        - name: POSTGRESQL_PORT
+          value: "5432"
+        ports:
+          - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          timeoutSeconds: 5
+          initialDelaySeconds: 90
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          timeoutSeconds: 5
+          initialDelaySeconds: 90
+          periodSeconds: 3
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
